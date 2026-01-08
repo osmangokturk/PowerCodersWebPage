@@ -10,11 +10,12 @@
     <div class="container">
         <!-- Time Checker -->
         <div class="time-section">
+            <h3>Check City Time</h3>
             <div class="time-form">
-                <input type="text" id="cityInput" placeholder="Enter city (e.g., Tokyo)">
-                <button onclick="getCityTime()">Check Local Time</button>
+                <input type="text" id="cityInput" placeholder="Enter city name">
+                <button id="timeButton">Get Local Time</button>
             </div>
-            <div id="timeDisplay">Time will appear here</div>
+            <div id="timeDisplay">Example: Tokyo = 9 hours ahead of UTC</div>
         </div>
 
         <!-- Header -->
@@ -57,6 +58,106 @@
         </footer>
     </div>
 
-    <script src="script.js"></script>
+    <!-- INLINE SCRIPT - GitHub Pages allows this! -->
+    <script>
+        // Simple time calculator - NO API calls, NO external dependencies
+        document.addEventListener('DOMContentLoaded', function() {
+            const cityInput = document.getElementById('cityInput');
+            const timeButton = document.getElementById('timeButton');
+            const timeDisplay = document.getElementById('timeDisplay');
+            
+            // City to UTC offset database (in hours)
+            const cityDatabase = {
+                'tokyo': { offset: 9, name: 'Tokyo, Japan' },
+                'new york': { offset: -5, name: 'New York, USA' },
+                'london': { offset: 0, name: 'London, UK' },
+                'paris': { offset: 1, name: 'Paris, France' },
+                'sydney': { offset: 10, name: 'Sydney, Australia' },
+                'los angeles': { offset: -8, name: 'Los Angeles, USA' },
+                'berlin': { offset: 1, name: 'Berlin, Germany' },
+                'mumbai': { offset: 5.5, name: 'Mumbai, India' },
+                'dubai': { offset: 4, name: 'Dubai, UAE' },
+                'singapore': { offset: 8, name: 'Singapore' },
+                'beijing': { offset: 8, name: 'Beijing, China' },
+                'seoul': { offset: 9, name: 'Seoul, South Korea' },
+                'rome': { offset: 1, name: 'Rome, Italy' },
+                'toronto': { offset: -5, name: 'Toronto, Canada' }
+            };
+            
+            function calculateCityTime(cityName) {
+                const now = new Date();
+                const utcHours = now.getUTCHours();
+                const utcMinutes = now.getUTCMinutes();
+                
+                // Find city in database
+                const cityKey = cityName.toLowerCase();
+                const cityData = cityDatabase[cityKey];
+                
+                if (!cityData) {
+                    return {
+                        success: false,
+                        message: `City "${cityName}" not found in database. Try: Tokyo, London, New York`
+                    };
+                }
+                
+                // Calculate city time
+                let cityHours = utcHours + cityData.offset;
+                if (cityHours >= 24) cityHours -= 24;
+                if (cityHours < 0) cityHours += 24;
+                
+                // Format time
+                const ampm = cityHours >= 12 ? 'PM' : 'AM';
+                const displayHours = cityHours % 12 || 12;
+                const formattedMinutes = utcMinutes.toString().padStart(2, '0');
+                
+                return {
+                    success: true,
+                    cityName: cityData.name,
+                    time: `${displayHours}:${formattedMinutes} ${ampm}`,
+                    offset: cityData.offset
+                };
+            }
+            
+            function updateTimeDisplay() {
+                const city = cityInput.value.trim();
+                
+                if (!city) {
+                    timeDisplay.innerHTML = '<span style="color: #e74c3c;">Please enter a city name!</span>';
+                    return;
+                }
+                
+                const result = calculateCityTime(city);
+                
+                if (result.success) {
+                    timeDisplay.innerHTML = `
+                        <strong>${result.time}</strong><br>
+                        <small>Current time in ${result.cityName}</small><br>
+                        <small style="color: #7f8c8d;">UTC${result.offset >= 0 ? '+' : ''}${result.offset} hours</small>
+                    `;
+                    timeDisplay.style.color = '#27ae60';
+                } else {
+                    timeDisplay.innerHTML = `<span style="color: #e74c3c;">${result.message}</span>`;
+                }
+            }
+            
+            // Event listeners
+            timeButton.addEventListener('click', updateTimeDisplay);
+            
+            cityInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    updateTimeDisplay();
+                }
+            });
+            
+            // Show example on page load
+            const exampleResult = calculateCityTime('tokyo');
+            if (exampleResult.success) {
+                timeDisplay.innerHTML = `
+                    <strong>Example: Tokyo = ${exampleResult.time}</strong><br>
+                    <small>Enter any city to see its current time</small>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
