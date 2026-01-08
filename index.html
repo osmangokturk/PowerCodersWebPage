@@ -81,7 +81,12 @@
                 'beijing': { offset: 8, name: 'Beijing, China' },
                 'seoul': { offset: 9, name: 'Seoul, South Korea' },
                 'rome': { offset: 1, name: 'Rome, Italy' },
-                'toronto': { offset: -5, name: 'Toronto, Canada' }
+                'toronto': { offset: -5, name: 'Toronto, Canada' },
+                 // Added Lausanne - Switzerland uses CET (UTC+1)
+                'lausanne': { offset: 1, name: 'Lausanne, Switzerland' },
+                'geneva': { offset: 1, name: 'Geneva, Switzerland' },
+                'zurich': { offset: 1, name: 'Zurich, Switzerland' },
+                'bern': { offset: 1, name: 'Bern, Switzerland' }
             };
             
             function calculateCityTime(cityName) {
@@ -161,3 +166,4 @@
     </script>
 </body>
 </html>
+
