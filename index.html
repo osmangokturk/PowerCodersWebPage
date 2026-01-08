@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Sushi Recipe</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Time Checker -->
+        <div class="time-section">
+            <div class="time-form">
+                <input type="text" id="cityInput" placeholder="Enter city (e.g., Tokyo)">
+                <button onclick="getCityTime()">Check Local Time</button>
+            </div>
+            <div id="timeDisplay">Time will appear here</div>
+        </div>
+
+        <!-- Header -->
+        <div class="header">
+            <div class="title">
+                <h1>A SUSHI RECIPE</h1>
+                <h1>FOR YOURSELF</h1>
+            </div>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Sushi_platter.jpg" 
+                 alt="Sushi Platter" 
+                 class="sushi-img">
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <div class="ingredients">
+                <h2>Ingredients</h2>
+                <ul>
+                    <li>Sushi Rice: 2 cups</li>
+                    <li>Nori Sheets: 5-6 sheets</li>
+                    <li>Fresh Salmon: 200g sliced</li>
+                    <li>Avocado: 1 ripe</li>
+                    <li>Cucumber: 1 medium</li>
+                    <li>Rice Vinegar: ¼ cup</li>
+                    <li>Sugar: 2 tbsp</li>
+                </ul>
+            </div>
+
+            <div class="preparation">
+                <h2>Preparation</h2>
+                <p>1. Rinse sushi rice until water runs clear. Cook as per instructions.</p>
+                <p>2. Mix vinegar, sugar, and salt. Fold into warm rice.</p>
+                <p>3. Place nori on mat, spread rice, add fillings, and roll tightly.</p>
+                <p>4. Slice with wet knife and serve with soy sauce.</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>Simple Sushi Recipe © 2024</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
